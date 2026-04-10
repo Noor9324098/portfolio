@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# Nooraddeen Portfolio (Game of Thrones Inspired)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a React single-page portfolio with an epic fantasy visual style inspired by Game of Thrones motifs.
+
+## Sections
+
+- Hero / Introduction
+- Projects (highest priority)
+- Music Collection
+- Skills / Tech Stack
+- Resume / CV download
+- Contact links
+
+## Project Highlights
+
+- Project 1: Interactive Fully Functional Web Based Pet Portal
+- Project 2: PXL Travel Booking Platform
+- Per-project media placeholders for screenshots and demo animation
+- Dedicated chill music block with audio players and placeholder sources
+
+## Responsive Design
+
+- Desktop and mobile friendly layout
+- Sticky navigation with section anchors
+- Flexible card/grid system and scalable typography
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, run:
 
-### `npm start`
+### npm start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Runs the app in development mode at http://localhost:3000.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### npm test
 
-### `npm test`
+Runs tests.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### npm run build
 
-### `npm run build`
+Builds production assets.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## File Map
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- src/App.js: main content and section composition
+- src/App.css: theme system, visuals, and responsive rules
+- src/index.css: global reset baseline
+- src/App.test.js: smoke test for hero and project headings
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Notes
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Resume download points to /Nooraddeen-Al-Haddad-CV.pdf.
+- Music players point to placeholder files in /public/music/.
+- Media placeholders are intentionally kept for content you want to add later.
