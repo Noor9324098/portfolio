@@ -31,7 +31,7 @@ Implemented sections
 	- Every listed skill now has a matching icon badge.
 
 4. Resume / CV
-	- Download button targeting /Nooraddeen-Al-Haddad-CV.pdf
+	- Connected the Resume download button directly to the imported CV.pdf file.
 	- Additional media reserve space for certificates/achievements
 
 5. Contact

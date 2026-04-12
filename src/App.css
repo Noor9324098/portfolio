@@ -199,10 +199,13 @@ a {
   font-family: 'Cinzel', serif;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+   
 }
 
 .hero-kicker {
-  font-size: 0.78rem;
+  font-size: 1rem;
+   animation: hero-kicker-shaking 5s linear infinite;
+   padding-top: 15%;
 }
 
 .hero h1 {
@@ -218,7 +221,7 @@ a {
 .hero-intro {
   margin: 1rem 0 0;
   color: #f8ecd4;
-  font-size: clamp(1.08rem, 2.2vw, 1.42rem);
+  font-size: clamp(2.3rem, 2.2vw, 1.42rem);
   line-height: 1.45;
   max-width: 34ch;
 }
@@ -496,14 +499,14 @@ a {
 
 .resume-panel {
   margin-top: 1rem;
-  display: grid;
-  grid-template-columns: minmax(220px, 320px) 1fr;
-  gap: 0.9rem;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
 }
 
-.resume-panel .btn {
-  justify-self: start;
+.resume-panel .media-slot {
+  width: 100%;
 }
 
 .contact-grid {
@@ -549,6 +552,7 @@ a {
   font-size: 0.72rem;
 }
 
+
 @keyframes driftFog {
   0% {
     transform: translate3d(-2%, 0, 0) scale(1);
@@ -580,11 +584,7 @@ a {
   }
 
   .resume-panel {
-    grid-template-columns: 1fr;
-  }
-
-  .resume-panel .btn {
-    justify-self: start;
+    gap: 1rem;
   }
 }
 
@@ -661,4 +661,12 @@ a {
 .skill-item a:hover {
   transform: scale(1.1) translateY(-2px);
   color: #00bcd4;
+}
+
+@keyframes hero-kicker-shaking {
+ 0% { transform: translateX(0) }
+ 25% { transform: translateX(5px) }
+ 50% { transform: translateX(-5px) }
+ 75% { transform: translateX(5px) }
+ 100% { transform: translateX(0) }
 }

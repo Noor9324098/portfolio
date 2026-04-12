@@ -8,19 +8,10 @@ export default function MusicPlayer() {
   useEffect(() => {
     if (audioRef.current) {
       // Set starting volume low
-      audioRef.current.volume = 0.2; 
+      audioRef.current.volume = 0.2;
     }
 
-    const playAudio = () => {
-      if (audioRef.current && !isPlaying) {
-        audioRef.current.muted = false;
-        audioRef.current.play().then(() => setIsPlaying(true)).catch(e => console.log(e));
-        window.removeEventListener("click", playAudio);
-      }
-    };
 
-    window.addEventListener("click", playAudio);
-    return () => window.removeEventListener("click", playAudio);
   }, [isPlaying]);
 
   const toggleMusic = (e) => {
@@ -44,7 +35,7 @@ export default function MusicPlayer() {
       </button>
       <audio
         ref={audioRef}
-        src="/music.mp3"
+        src="/sounds/music.mp3"
         autoPlay
         loop
         muted

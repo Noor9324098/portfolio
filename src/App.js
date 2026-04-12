@@ -24,7 +24,9 @@ import { TbComponents } from "react-icons/tb";
 import { SwordCursor } from "./SwordCursor";
 import { RavenFly, triggerRaven } from "./Raven";
 import MusicPlayer from "./MusicPlayer";
-import { label } from "framer-motion/client";
+import { RavenSound, triggerRavenSound } from "./RavenSound";
+import { ProjectSound, triggerProjectSound } from "./ProjectHallSound";
+import cvPdf from "./CV.pdf";
 
 const navigationLinks = [
   { id: "projects", label: "Projects" },
@@ -39,9 +41,9 @@ const projects = [
     description:
       "This portal is a mini digital simulation where users can adopt animals and interact with them by feeding them, playing with them, and treating them, with extra features such as shopping, account credentials, and saved logs.",
     images: [
-      "/images/pet-portal-1.png",
-      "/images/pet-portal-2.png",
-      "/images/pet-portal-3.png",
+      "/images/project/pet-portal-1.png",
+      "/images/project/pet-portal-2.png",
+      "/images/project/pet-portal-3.png",
     ],
     stack: [
       { label: "Svelte 5 Framework", Icon: SiSvelte },
@@ -56,7 +58,11 @@ const projects = [
     title: "PXL Travel Booking Platform",
     description:
       "A full stack travel booking website for an existing company in Yemen, providing local and international flight search and booking services in addition to bus booking.",
-    stack: [
+    images:[
+       "/images/project/pxl-travel-1.png",
+      "/images/project/pxl-travel-2.png"
+    ],
+      stack: [
       { label: "Vite (build tool)", Icon: SiVite },
       { label: "TypeScript (type safety)", Icon: SiTypescript },
       { label: "React (UI)", Icon: SiReact },
@@ -65,6 +71,7 @@ const projects = [
       { label: "SQL (database)", Icon: FaDatabase },
       { label: "MongoDB (database)", Icon: SiMongodb },
     ],
+    github: "https://github.com/Noor9324098/PXL_Travel"
   },
 ];
 
@@ -136,6 +143,9 @@ function App() {
       <RavenFly />
       <SwordCursor />
       <MusicPlayer />
+      <RavenSound />
+      <ProjectSound />
+
       <div className="atmosphere-layer" aria-hidden="true" />
 
       <header className="top-nav" aria-label="Main navigation">
@@ -152,15 +162,20 @@ function App() {
       <main className="content-wrap">
         <section className="hero" aria-label="Portfolio introduction">
           <div className="hero-copy">
-            <p className="hero-kicker">The North Remembers Great Work</p>
-            <h1>Nooraddeen Al-Haddad</h1>
             <p className="hero-intro">
               This is Nooraddeen Al-Haddad of Yemen they call me Noor, make
-              yourself coffee and enjoy the chilling music while browsing my
+              yourself coffee and enjoy the epic music while browsing my
               portfolio!
             </p>
+
             <div className="hero-actions">
-              <a className="btn btn-gold" href="#projects">
+              <a
+                className="btn btn-gold"
+                href="#projects"
+                onClick={(e) => {
+                  triggerProjectSound();
+                }}
+              >
                 Enter The Projects Hall
               </a>
               <a
@@ -168,20 +183,25 @@ function App() {
                 href="#contact"
                 onClick={(e) => {
                   triggerRaven();
+                  triggerRavenSound();
                 }}
               >
                 Send A Raven
               </a>
+              <h1 className="hero-kicker">The North Remembers Great Work</h1>
             </div>
           </div>
 
           <aside className="hero-media" aria-label="Media reserve space">
-            <h2>Hero Media Reserve</h2>
-            <div className="media-slot large">
-              <strong>Reserved Space</strong>
-              <p>
-                Add intro video, profile image, or cinematic animation here.
-              </p>
+            <div
+              className="media-slot large"
+              style={{ padding: 0, overflow: "hidden" }}
+            >
+              <img
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                src="images/personalphoto/personal.jpeg"
+                alt="Noor"
+              />
             </div>
           </aside>
         </section>
@@ -269,7 +289,6 @@ function App() {
           aria-label="Skills and tech stack"
         >
           <div className="section-heading">
-            <p className="section-kicker">Tools of the Realm</p>
             <h2>Skills / Tech Stack</h2>
           </div>
 
@@ -300,23 +319,19 @@ function App() {
           aria-label="Resume"
         >
           <div className="section-heading">
-            <p className="section-kicker">Career Snapshot</p>
             <h2>Resume / CV</h2>
-            <p>Download the latest PDF resume using the button below.</p>
           </div>
 
           <div className="resume-panel">
             <a
               className="btn btn-gold"
-              href="/Nooraddeen-Al-Haddad-CV.pdf"
-              download
+              href={cvPdf}
+              download="CV.pdf"
+              target="_blank"
+              rel="noreferrer"
             >
               Download CV (PDF)
             </a>
-            <div className="media-slot">
-              <strong>Extra Media Space</strong>
-              <p>Add certificates, recommendations, or achievements here.</p>
-            </div>
           </div>
         </section>
 
@@ -331,34 +346,45 @@ function App() {
           </div>
 
           {contact.map((group) => (
-  <article key={group.title} className="skill-card">
-    <ul>
-      {group.items.map((item) => {
-        const Icon = item.Icon;
+            <article key={group.title} className="skill-card">
+              <ul>
+                {group.items.map((item) => {
+                  const Icon = item.Icon;
 
-        return (
-          <li key={`${group.title}-${item.label}`} className="skill-item">
-            <Icon className="skill-icon" aria-hidden="true" />
+                  return (
+                    <li
+                      key={`${group.title}-${item.label}`}
+                      className="skill-item"
+                    >
+                      <Icon className="skill-icon" aria-hidden="true" />
 
-            <span>{item.label}:</span>
+                      <span>{item.label}:</span>
 
-            {item.email && (
-              <a className = ".skill-item a" href={`mailto:${item.email}`}>
-                {item.email}
-              </a>
-            )}
+                      {item.email && (
+                        <a
+                          className=".skill-item a"
+                          href={`mailto:${item.email}`}
+                        >
+                          {item.email}
+                        </a>
+                      )}
 
-            {item.url && (
-              <a className = ".skill-item a" href={item.url} target="_blank" rel="noopener noreferrer">
-                {item.url}
-              </a>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  </article>
-))}
+                      {item.url && (
+                        <a
+                          className=".skill-item a"
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {item.url}
+                        </a>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </article>
+          ))}
         </section>
       </main>
 
