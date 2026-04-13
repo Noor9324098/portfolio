@@ -33,9 +33,9 @@ export default function MusicPlayer() {
       <button onClick={toggleMusic} className="btn btn-gold" style={{ padding: "10px", display: "flex", gap: "8px", alignItems: "center" }}>
         <FaMusic /> {isPlaying ? "Pause Music" : "Play Music"}
       </button>
-      <audio
+      < audio
         ref={audioRef}
-        src="/sounds/music.mp3"
+        src={`${process.env.PUBLIC_URL}/sounds/music.mp3`}
         autoPlay
         loop
         muted

@@ -41,9 +41,9 @@ const projects = [
     description:
       "This portal is a mini digital simulation where users can adopt animals and interact with them by feeding them, playing with them, and treating them, with extra features such as shopping, account credentials, and saved logs.",
     images: [
-      "/images/project/pet-portal-1.png",
-      "/images/project/pet-portal-2.png",
-      "/images/project/pet-portal-3.png",
+      `${process.env.PUBLIC_URL}/images/project/pet-portal-1.png`,
+      `${process.env.PUBLIC_URL}/images/project/pet-portal-2.png`,
+      `${process.env.PUBLIC_URL}/images/project/pet-portal-3.png`,
     ],
     stack: [
       { label: "Svelte 5 Framework", Icon: SiSvelte },
@@ -59,8 +59,8 @@ const projects = [
     description:
       "A full stack travel booking website for an existing company in Yemen, providing local and international flight search and booking services in addition to bus booking.",
     images:[
-       "/images/project/pxl-travel-1.png",
-      "/images/project/pxl-travel-2.png"
+       `${process.env.PUBLIC_URL}/images/project/pxl-travel-1.png`,
+      `${process.env.PUBLIC_URL}/images/project/pxl-travel-2.png`
     ],
       stack: [
       { label: "Vite (build tool)", Icon: SiVite },
@@ -199,7 +199,7 @@ function App() {
             >
               <img
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                src="images/personalphoto/personal.jpeg"
+                src={`${process.env.PUBLIC_URL}/images/personalphoto/personal.jpeg`}
                 alt="Noor"
               />
             </div>
@@ -257,11 +257,6 @@ function App() {
                     <>
                       <div className="media-slot">
                         <strong>Screenshot Slot</strong>
-                        <p>Add a polished UI screenshot here.</p>
-                      </div>
-                      <div className="media-slot">
-                        <strong>Demo / Animation Slot</strong>
-                        <p>Add GIF, reel, or short walkthrough clip here.</p>
                       </div>
                     </>
                   )}
@@ -272,11 +267,7 @@ function App() {
                     <a href={project.github} target="_blank" rel="noreferrer">
                       View on GitHub
                     </a>
-                  ) : (
-                    <span className="pending-link">
-                      GitHub link can be added later.
-                    </span>
-                  )}
+                  ) : null}
                 </div>
               </article>
             ))}

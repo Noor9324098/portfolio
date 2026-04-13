@@ -9,7 +9,7 @@ export const triggerRavenSound = () => {
 };
 
 export const RavenSound = () => {
-  const soundRef = useRef(new Audio("/sounds/RavenSound.mp3"));
+  const soundRef = useRef(new Audio(`${process.env.PUBLIC_URL}/sounds/RavenSound.mp3`));
 
   const playSound = () => {
     soundRef.current.currentTime = 0;

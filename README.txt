@@ -54,5 +54,7 @@ Available scripts
 - npm start
 - npm test
 - npm run build
+- npm run deploy (fixed to deploy the "build" folder using gh-pages)
 
 - Replated music section with a global background audio toggle button.
+- Updated all public assets (images and sounds) to use process.env.PUBLIC_URL for reliable GitHub Pages loading.
