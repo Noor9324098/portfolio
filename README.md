@@ -1,4 +1,4 @@
-# Nooraddeen Portfolio (Game of Thrones Inspired)
+# Nooraddeen Portfolio
 
 This project is a React single-page portfolio with an epic fantasy visual style inspired by Game of Thrones motifs.
 
