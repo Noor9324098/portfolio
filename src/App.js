@@ -63,13 +63,13 @@ const projects = [
       `${process.env.PUBLIC_URL}/images/project/pxl-travel-2.png`
     ],
       stack: [
-      { label: "Vite (build tool)", Icon: SiVite },
-      { label: "TypeScript (type safety)", Icon: SiTypescript },
-      { label: "React (UI)", Icon: SiReact },
-      { label: "shadcn-ui (components)", Icon: TbComponents },
-      { label: "Tailwind CSS (styling)", Icon: SiTailwindcss },
-      { label: "SQL (database)", Icon: FaDatabase },
-      { label: "MongoDB (database)", Icon: SiMongodb },
+      { label: "Vite ", Icon: SiVite },
+      { label: "TypeScript", Icon: SiTypescript },
+      { label: "React", Icon: SiReact },
+      { label: "shadcn-ui", Icon: TbComponents },
+      { label: "Tailwind CSS", Icon: SiTailwindcss },
+      { label: "SQL", Icon: FaDatabase },
+      { label: "MongoDB", Icon: SiMongodb },
     ],
     github: "https://github.com/Noor9324098/PXL_Travel"
   },
@@ -91,7 +91,7 @@ const skillGroups = [
     title: "Backend",
     items: [
       { label: "Node", Icon: SiNodedotjs },
-      { label: "SpringBoot (Java)", Icon: SiSpringboot },
+      { label: "SpringBoot", Icon: SiSpringboot },
       { label: "C", Icon: SiC },
     ],
   },
