@@ -1,388 +1,366 @@
+import { useEffect, useMemo, useState } from "react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdEmail, MdLocationOn, MdDownload, MdClose } from "react-icons/md";
 import "./App.css";
-import { FaDatabase, FaLinkedin } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-
 import {
-  SiC,
-  SiCss,
-  SiGit,
-  SiHtml5,
-  SiJavascript,
-  SiLinux,
-  SiMongodb,
-  SiMysql,
-  SiNodedotjs,
-  SiReact,
-  SiSpringboot,
-  SiSvelte,
-  SiTailwindcss,
-  SiTypescript,
-  SiVite,
-  SiSubstack,
-} from "react-icons/si";
-import { TbComponents } from "react-icons/tb";
-import { SwordCursor } from "./SwordCursor";
-import { RavenFly, triggerRaven } from "./Raven";
-import MusicPlayer from "./MusicPlayer";
-import { RavenSound, triggerRavenSound } from "./RavenSound";
-import { ProjectSound, triggerProjectSound } from "./ProjectHallSound";
-import cvPdf from "./CV.pdf";
+  profile,
+  experience,
+  education,
+  projects,
+  internshipWork,
+  skills,
+  languages,
+} from "./data";
 
-const navigationLinks = [
+const nav = [
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
-  { id: "resume", label: "Resume" },
   { id: "contact", label: "Contact" },
 ];
 
-const projects = [
-  {
-    title: "Interactive Fully Functional Web Based Pet Portal",
-    description:
-      "This portal is a mini digital simulation where users can adopt animals and interact with them by feeding them, playing with them, and treating them, with extra features such as shopping, account credentials, and saved logs.",
-    images: [
-      `${process.env.PUBLIC_URL}/images/project/pet-portal-1.png`,
-      `${process.env.PUBLIC_URL}/images/project/pet-portal-2.png`,
-      `${process.env.PUBLIC_URL}/images/project/pet-portal-3.png`,
-    ],
-    stack: [
-      { label: "Svelte 5 Framework", Icon: SiSvelte },
-      { label: "TypeScript", Icon: SiTypescript },
-      { label: "HTML", Icon: SiHtml5 },
-      { label: "CSS", Icon: SiCss },
-      { label: "Local DB (logs and account credentials)", Icon: FaDatabase },
-    ],
-    github: "https://github.com/Noor9324098/Pet-portal",
-  },
-  {
-    title: "PXL Travel Booking Platform",
-    description:
-      "A full stack travel booking website for an existing company in Yemen, providing local and international flight search and booking services in addition to bus booking.",
-    images:[
-       `${process.env.PUBLIC_URL}/images/project/pxl-travel-1.png`,
-      `${process.env.PUBLIC_URL}/images/project/pxl-travel-2.png`
-    ],
-      stack: [
-      { label: "Vite ", Icon: SiVite },
-      { label: "TypeScript", Icon: SiTypescript },
-      { label: "React", Icon: SiReact },
-      { label: "shadcn-ui", Icon: TbComponents },
-      { label: "Tailwind CSS", Icon: SiTailwindcss },
-      { label: "SQL", Icon: FaDatabase },
-      { label: "MongoDB", Icon: SiMongodb },
-    ],
-    github: "https://github.com/Noor9324098/PXL_Travel"
-  },
-];
+// Every technology used by at least one project or internship task.
+const allWork = [...projects, ...internshipWork];
+const usedTech = new Set(allWork.flatMap((p) => p.stack));
 
-const skillGroups = [
-  {
-    title: "Frontend",
-    items: [
-      { label: "HTML", Icon: SiHtml5 },
-      { label: "CSS", Icon: SiCss },
-      { label: "JavaScript", Icon: SiJavascript },
-      { label: "TypeScript", Icon: SiTypescript },
-      { label: "React", Icon: SiReact },
-      { label: "Svelte", Icon: SiSvelte },
-    ],
-  },
-  {
-    title: "Backend",
-    items: [
-      { label: "Node", Icon: SiNodedotjs },
-      { label: "SpringBoot", Icon: SiSpringboot },
-      { label: "C", Icon: SiC },
-    ],
-  },
-  {
-    title: "Database",
-    items: [
-      { label: "SQL", Icon: FaDatabase },
-      { label: "MySQL", Icon: SiMysql },
-      { label: "MongoDB", Icon: SiMongodb },
-    ],
-  },
-  {
-    title: "Other",
-    items: [
-      { label: "Git", Icon: SiGit },
-      { label: "Linux", Icon: SiLinux },
-      { label: "Vite", Icon: SiVite },
-    ],
-  },
-];
+const matches = (item, tech) => !tech || item.stack.includes(tech);
 
-const contact = [
-  {
-    title: "Contacts",
-    items: [
-      {
-        label: "Email",
-        Icon: MdEmail,
-        email: "nooraddeenalhaddad2020@gmail.com",
-      },
-      { label: "Github", Icon: SiGit, url: "https://github.com/Noor9324098" },
-      {
-        label: "Linkedin",
-        Icon: FaLinkedin,
-        url: "https://www.linkedin.com/in/nooraddeeen/",
-      },
-      {
-        label: "Substack",
-        Icon: SiSubstack,
-        url: "https://substack.com/@nooraddeenalhaddad",
-      },
-    ],
-  },
-];
+function Section({ id, title, children }) {
+  return (
+    <section id={id} className="section" aria-labelledby={`${id}-title`}>
+      <h2 id={`${id}-title`} className="section-title">
+        {title}
+      </h2>
+      {children}
+    </section>
+  );
+}
+
+function Links({ links }) {
+  return (
+    <div className="card-links">
+      {links.map((l) => (
+        <a key={l.url} href={l.url} target="_blank" rel="noreferrer">
+          {l.label === "Source" && <FaGithub aria-hidden="true" />}
+          {l.label}
+        </a>
+      ))}
+    </div>
+  );
+}
+
+// The creative touch: a small "how it works" pipeline on each card.
+// A pulse travels along the steps while the card is hovered or focused.
+function Flow({ steps, note }) {
+  return (
+    <figure className="flow" aria-label="How it works">
+      <ol>
+        {steps.map((s, i) => (
+          <li key={s} style={{ "--i": i }}>
+            <span>{s}</span>
+          </li>
+        ))}
+      </ol>
+      {note && <figcaption>{note}</figcaption>}
+    </figure>
+  );
+}
+
+function Stack({ items, active, onPick }) {
+  return (
+    <ul className="chips" aria-label="Technologies">
+      {items.map((t) => (
+        <li key={t}>
+          <button
+            type="button"
+            className={`chip${active === t ? " is-active" : ""}`}
+            onClick={() => onPick(active === t ? null : t)}
+            aria-pressed={active === t}
+          >
+            {t}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ProjectCard({ project, index, tech, setTech, openImage }) {
+  const dim = !matches(project, tech);
+  return (
+    <article className={`project${dim ? " is-dim" : ""}`}>
+      <div className="project-index" aria-hidden="true">
+        {String(index + 1).padStart(2, "0")}
+      </div>
+      <div className="project-body">
+        <p className="eyebrow">
+          {project.kind}
+          {project.period && <> · {project.period}</>}
+        </p>
+        <h3>
+          {project.title}
+          <span className="project-sub">{project.subtitle}</span>
+        </h3>
+        <p className="project-summary">{project.summary}</p>
+        <Flow steps={project.flow} note={project.flowNote} />
+        {project.highlights && (
+          <ul className="highlights">
+            {project.highlights.map((h) => (
+              <li key={h}>{h}</li>
+            ))}
+          </ul>
+        )}
+        <Stack items={project.stack} active={tech} onPick={setTech} />
+        <Links links={project.links} />
+      </div>
+      {project.images && (
+        <div className="shots">
+          {project.images.map((src, i) => (
+            <button
+              key={src}
+              type="button"
+              className="shot"
+              onClick={() => openImage({ src, alt: `${project.title} screenshot ${i + 1}` })}
+              aria-label={`Enlarge ${project.title} screenshot ${i + 1}`}
+            >
+              <img src={src} alt="" loading="lazy" />
+            </button>
+          ))}
+        </div>
+      )}
+    </article>
+  );
+}
+
+function Lightbox({ image, onClose }) {
+  useEffect(() => {
+    if (!image) return undefined;
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [image, onClose]);
+
+  if (!image) return null;
+  return (
+    <div className="lightbox" role="dialog" aria-modal="true" aria-label={image.alt} onClick={onClose}>
+      <button type="button" className="lightbox-close" onClick={onClose} aria-label="Close" autoFocus>
+        <MdClose />
+      </button>
+      <img src={image.src} alt={image.alt} onClick={(e) => e.stopPropagation()} />
+    </div>
+  );
+}
 
 function App() {
+  const [tech, setTech] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const filterTech = useMemo(() => [...usedTech].sort((a, b) => a.localeCompare(b)), []);
+  const shown = allWork.filter((p) => matches(p, tech)).length;
+
+  const pickFromSkills = (t) => {
+    setTech(t);
+    document.getElementById("projects")?.scrollIntoView();
+  };
+
   return (
-    <div className="throne-page" id="top">
-      <RavenFly />
-      <SwordCursor />
-      <MusicPlayer />
-      <RavenSound />
-      <ProjectSound />
-
-      <div className="atmosphere-layer" aria-hidden="true" />
-
-      <header className="top-nav" aria-label="Main navigation">
-        <p className="brand">Nooraddeen Al-Haddad | Portfolio</p>
-        <nav className="nav-links" aria-label="Section links">
-          {navigationLinks.map((link) => (
-            <a key={link.id} href={`#${link.id}`}>
-              {link.label}
-            </a>
-          ))}
-        </nav>
+    <>
+      <header className="topbar">
+        <div className="topbar-inner">
+          <a href="#top" className="brand">
+            N. Al-Haddad
+          </a>
+          <nav aria-label="Sections">
+            {nav.map((n) => (
+              <a key={n.id} href={`#${n.id}`}>
+                {n.label}
+              </a>
+            ))}
+          </nav>
+          <a className="btn btn-small" href={profile.cv} target="_blank" rel="noreferrer">
+            CV
+          </a>
+        </div>
       </header>
 
-      <main className="content-wrap">
-        <section className="hero" aria-label="Portfolio introduction">
-          <div className="hero-copy">
-            <p className="hero-intro">
-              This is Nooraddeen Al-Haddad of Yemen they call me Noor, make
-              yourself coffee and enjoy the epic music while browsing my
-              portfolio!
+      <main id="top">
+        <section className="hero" aria-label="Introduction">
+          <div className="hero-text">
+            <p className="eyebrow">{profile.badge}</p>
+            <h1>{profile.name.replace("-", "\u2011")}</h1>
+            <p className="hero-role">{profile.role}</p>
+            <p className="hero-study">{profile.study}</p>
+            <p className="hero-meta">
+              <MdLocationOn aria-hidden="true" /> {profile.location}
             </p>
-
             <div className="hero-actions">
-              <a
-                className="btn btn-gold"
-                href="#projects"
-                onClick={(e) => {
-                  triggerProjectSound();
-                }}
-              >
-                Enter The Projects Hall
+              <a className="btn" href="#projects">
+                View projects
               </a>
-              <a
-                className="btn btn-iron"
-                href="#contact"
-                onClick={(e) => {
-                  triggerRaven();
-                  triggerRavenSound();
-                }}
-              >
-                Send A Raven
+              <a className="btn btn-ghost" href={profile.cv} target="_blank" rel="noreferrer">
+                <MdDownload aria-hidden="true" /> Download CV
               </a>
-              <h1 className="hero-kicker">The North Remembers Great Work</h1>
             </div>
           </div>
-
-          <aside className="hero-media" aria-label="Media reserve space">
-            <div
-              className="media-slot large"
-              style={{ padding: 0, overflow: "hidden" }}
-            >
-              <img
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                src={`${process.env.PUBLIC_URL}/images/personalphoto/personal.jpeg`}
-                alt="Noor"
-              />
-            </div>
-          </aside>
+          <img className="hero-photo" src={profile.photo} alt={profile.name} />
         </section>
 
-        <section
-          className="section projects-section"
-          id="projects"
-          aria-label="Projects"
-        >
-          <div className="section-heading">
-            <h2>Projects</h2>
-          </div>
-
-          <div className="projects-grid">
-            {projects.map((project) => (
-              <article key={project.title} className="project-card">
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div>
-                  <p className="label-line">Tech Stack</p>
-                  <ul
-                    className="stack-list"
-                    aria-label={`${project.title} tech stack`}
-                  >
-                    {project.stack.map((item) => {
-                      const Icon = item.Icon;
-
-                      return (
-                        <li key={`${project.title}-${item.label}`}>
-                          <Icon className="tech-icon" aria-hidden="true" />
-                          <span>{item.label}</span>
-                        </li>
-                      );
-                    })}
+        <Section id="about" title="About">
+          <p className="lead">{profile.statement}</p>
+          <div className="two-col">
+            <div>
+              <h3 className="sub-title">Education</h3>
+              {education.map((e) => (
+                <div key={e.title} className="entry">
+                  <p className="entry-head">
+                    <strong>{e.title}</strong>
+                    <span>{e.period}</span>
+                  </p>
+                  <p className="entry-org">
+                    {e.org}, {e.place}
+                  </p>
+                  <ul>
+                    {e.points.map((p) => (
+                      <li key={p}>{p}</li>
+                    ))}
                   </ul>
                 </div>
+              ))}
+            </div>
+            <div>
+              <h3 className="sub-title">Languages</h3>
+              <dl className="langs">
+                {languages.map((l) => (
+                  <div key={l.name}>
+                    <dt>{l.name}</dt>
+                    <dd>{l.level}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </Section>
 
-                <div
-                  className="project-media-grid"
-                  aria-label={`${project.title} media placeholders`}
+        <Section id="experience" title="Experience">
+          {experience.map((e) => (
+            <div key={e.title} className="entry">
+              <p className="entry-head">
+                <strong>{e.title}</strong>
+                <span>{e.period}</span>
+              </p>
+              <p className="entry-org">
+                {e.org}, {e.place}
+              </p>
+              <p>{e.summary}</p>
+              <p className="entry-more">
+                The four tasks are listed under <a href="#internship">Internship work</a>.
+              </p>
+            </div>
+          ))}
+        </Section>
+
+        <Section id="projects" title="Projects">
+          <div className="filter" role="group" aria-label="Filter projects by technology">
+            <span className="filter-label">Filter by technology</span>
+            <div className="chips">
+              <button
+                type="button"
+                className={`chip${!tech ? " is-active" : ""}`}
+                onClick={() => setTech(null)}
+                aria-pressed={!tech}
+              >
+                All
+              </button>
+              {filterTech.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  className={`chip${tech === t ? " is-active" : ""}`}
+                  onClick={() => setTech(tech === t ? null : t)}
+                  aria-pressed={tech === t}
                 >
-                  {project.images ? (
-                    project.images.map((imgSrc, idx) => (
-                      <div className="media-slot image-slot" key={idx}>
-                        <img
-                          src={imgSrc}
-                          alt={`${project.title} screenshot ${idx + 1}`}
-                          className="hover-zoom-img"
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    <>
-                      <div className="media-slot">
-                        <strong>Screenshot Slot</strong>
-                      </div>
-                    </>
-                  )}
-                </div>
+                  {t}
+                </button>
+              ))}
+            </div>
+            <span className="filter-count" aria-live="polite">
+              {tech ? `${shown} of ${allWork.length} use ${tech}` : `${allWork.length} pieces of work`}
+            </span>
+          </div>
 
-                <div className="project-links">
-                  {project.github ? (
-                    <a href={project.github} target="_blank" rel="noreferrer">
-                      View on GitHub
-                    </a>
-                  ) : null}
-                </div>
+          <div className="projects">
+            {projects.map((p, i) => (
+              <ProjectCard key={p.id} project={p} index={i} tech={tech} setTech={setTech} openImage={setImage} />
+            ))}
+          </div>
+
+          <h3 id="internship" className="sub-title internship-title">
+            Internship work · Lime Light Renhold AS
+          </h3>
+          <div className="mini-grid">
+            {internshipWork.map((w) => (
+              <article key={w.title} className={`mini${matches(w, tech) ? "" : " is-dim"}`}>
+                <h4>{w.title}</h4>
+                <p>{w.summary}</p>
+                <Stack items={w.stack} active={tech} onPick={setTech} />
+                <Links links={w.links} />
               </article>
             ))}
           </div>
-        </section>
+        </Section>
 
-        <section
-          className="section skills-section"
-          id="skills"
-          aria-label="Skills and tech stack"
-        >
-          <div className="section-heading">
-            <h2>Skills / Tech Stack</h2>
-          </div>
-
-          <div className="skills-grid">
-            {skillGroups.map((group) => (
-              <article key={group.title} className="skill-card">
-                <h3>{group.title}</h3>
-                <ul>
-                  {group.items.map((item) => {
-                    const Icon = item.Icon;
-
-                    return (
-                      <li key={`${group.title}-${item.label}`}>
-                        <Icon className="skill-icon" aria-hidden="true" />
-                        <span>{item.label}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section
-          className="section resume-section"
-          id="resume"
-          aria-label="Resume"
-        >
-          <div className="section-heading">
-            <h2>Resume / CV</h2>
-          </div>
-
-          <div className="resume-panel">
-            <a
-              className="btn btn-gold"
-              href={cvPdf}
-              download="CV.pdf"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Download CV (PDF)
-            </a>
-          </div>
-        </section>
-
-        <section
-          className="section contact-section"
-          id="contact"
-          aria-label="Contact"
-        >
-          <div className="section-heading">
-            <p className="section-kicker">Raven Routes</p>
-            <h2>Contact</h2>
-          </div>
-
-          {contact.map((group) => (
-            <article key={group.title} className="skill-card">
-              <ul>
-                {group.items.map((item) => {
-                  const Icon = item.Icon;
-
-                  return (
-                    <li
-                      key={`${group.title}-${item.label}`}
-                      className="skill-item"
-                    >
-                      <Icon className="skill-icon" aria-hidden="true" />
-
-                      <span>{item.label}:</span>
-
-                      {item.email && (
-                        <a
-                          className=".skill-item a"
-                          href={`mailto:${item.email}`}
-                        >
-                          {item.email}
-                        </a>
-                      )}
-
-                      {item.url && (
-                        <a
-                          className=".skill-item a"
-                          href={item.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {item.url}
-                        </a>
+        <Section id="skills" title="Skills">
+          <p className="hint">Highlighted technologies appear in the projects above. Select one to see where.</p>
+          <div className="skills">
+            {skills.map((g) => (
+              <div key={g.group} className="skill-group">
+                <h3 className="sub-title">{g.group}</h3>
+                <ul className="chips">
+                  {g.items.map((s) => (
+                    <li key={s}>
+                      {usedTech.has(s) ? (
+                        <button type="button" className="chip chip-linked" onClick={() => pickFromSkills(s)}>
+                          {s}
+                        </button>
+                      ) : (
+                        <span className="chip chip-static">{s}</span>
                       )}
                     </li>
-                  );
-                })}
-              </ul>
-            </article>
-          ))}
-        </section>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <Section id="contact" title="Contact">
+          <ul className="contact">
+            <li>
+              <a href={`mailto:${profile.email}`}>
+                <MdEmail aria-hidden="true" /> {profile.email}
+              </a>
+            </li>
+            <li>
+              <a href={profile.github} target="_blank" rel="noreferrer">
+                <FaGithub aria-hidden="true" /> github.com/Noor9324098
+              </a>
+            </li>
+            <li>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer">
+                <FaLinkedin aria-hidden="true" /> linkedin.com/in/nooraddeeen
+              </a>
+            </li>
+          </ul>
+        </Section>
       </main>
 
-      <footer className="footer-note">
-        <p>Forged by Nooraddeen Al-Haddad</p>
+      <footer className="footer">
+        <p>© {new Date().getFullYear()} {profile.name}</p>
       </footer>
-    </div>
+
+      <Lightbox image={image} onClose={() => setImage(null)} />
+    </>
   );
 }
 
