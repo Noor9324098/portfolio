@@ -1,54 +1,23 @@
-# Nooraddeen Portfolio
+# Nooraddeen Al-Haddad · Portfolio
 
-This project is a React single-page portfolio with an epic fantasy visual style inspired by Game of Thrones motifs.
+Personal portfolio site, live at https://noor9324098.github.io/portfolio/.
+Built with React (Create React App) and deployed to GitHub Pages.
 
 ## Sections
 
-- Hero / Introduction
-- Projects (highest priority)
-- Music Collection
-- Skills / Tech Stack
-- Resume / CV download
-- Contact links
+About (education, languages) · Experience · Projects · Skills · Contact, plus a downloadable CV.
 
-## Project Highlights
+Projects can be filtered by technology, and each project card shows a short
+"how it works" pipeline that animates on hover. Selecting a highlighted skill
+jumps to the projects that use it. Screenshots open in a lightbox.
 
-- Project 1: Interactive Fully Functional Web Based Pet Portal
-- Project 2: PXL Travel Booking Platform
-- Per-project media placeholders for screenshots and demo animation
-- Dedicated chill music block with audio players and placeholder sources
+## Editing content
 
-## Responsive Design
+All text lives in `src/data.js` and mirrors the CV. Change the CV PDF at
+`public/Nooraddeen_Al-Haddad_CV.pdf`; screenshots are in `public/images/project/`.
 
-- Desktop and mobile friendly layout
-- Sticky navigation with section anchors
-- Flexible card/grid system and scalable typography
+## Scripts
 
-## Available Scripts
-
-In the project directory, run:
-
-### npm start
-
-Runs the app in development mode at http://localhost:3000.
-
-### npm test
-
-Runs tests.
-
-### npm run build
-
-Builds production assets.
-
-## File Map
-
-- src/App.js: main content and section composition
-- src/App.css: theme system, visuals, and responsive rules
-- src/index.css: global reset baseline
-- src/App.test.js: smoke test for hero and project headings
-
-## Notes
-
-- Resume download points to /Nooraddeen-Al-Haddad-CV.pdf.
-- Music players point to placeholder files in /public/music/.
-- Media placeholders are intentionally kept for content you want to add later.
+- `npm start`: run locally at http://localhost:3000
+- `npm run build`: production build
+- `npm run deploy`: build and publish to the `gh-pages` branch

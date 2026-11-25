@@ -1,3 +1,14 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
 html,
 body,
 #root {
@@ -6,9 +17,17 @@ body,
 
 body {
   margin: 0;
-  cursor: none; /* Hide default cursor to show only the sword */
+  -webkit-font-smoothing: antialiased;
 }
 
-a, button, input {
-  cursor: none; /* Hide pointer cursors on interactable elements */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
