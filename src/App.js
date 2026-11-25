@@ -168,9 +168,6 @@ function App() {
     <>
       <header className="topbar">
         <div className="topbar-inner">
-          <a href="#top" className="brand">
-            N. Al-Haddad
-          </a>
           <nav aria-label="Sections">
             {nav.map((n) => (
               <a key={n.id} href={`#${n.id}`}>
@@ -189,8 +186,7 @@ function App() {
           <div className="hero-text">
             <p className="eyebrow">{profile.badge}</p>
             <h1>{profile.name.replace("-", "\u2011")}</h1>
-            <p className="hero-role">{profile.role}</p>
-            <p className="hero-study">{profile.study}</p>
+            <p className="hero-role">{profile.study}</p>
             <p className="hero-meta">
               <MdLocationOn aria-hidden="true" /> {profile.location}
             </p>

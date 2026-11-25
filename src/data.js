@@ -6,7 +6,6 @@ const gh = (repo) => `https://github.com/Noor9324098/${repo}`;
 
 export const profile = {
   name: "Nooraddeen Al-Haddad",
-  role: "Software Engineer",
   study: "Computer Science Engineering BSc (final year), University of Pécs",
   location: "Pécs, Hungary",
   badge: "Stipendium Hungaricum scholar",
