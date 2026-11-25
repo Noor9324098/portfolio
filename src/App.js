@@ -184,7 +184,6 @@ function App() {
       <main id="top">
         <section className="hero" aria-label="Introduction">
           <div className="hero-text">
-            <p className="eyebrow">{profile.badge}</p>
             <h1>{profile.name.replace("-", "\u2011")}</h1>
             <p className="hero-role">{profile.study}</p>
             <p className="hero-meta">

@@ -8,10 +8,9 @@ export const profile = {
   name: "Nooraddeen Al-Haddad",
   study: "Computer Science Engineering BSc (final year), University of Pécs",
   location: "Pécs, Hungary",
-  badge: "Stipendium Hungaricum scholar",
   photo: `${process.env.PUBLIC_URL}/images/personalphoto/personal.jpeg`,
   statement:
-    "Final-year Computer Science Engineering student at the University of Pécs and Stipendium Hungaricum scholar. I build full-stack web applications and distributed back-end systems. I want to specialise in data-intensive, distributed and secure software systems.",
+    "Final-year Computer Science Engineering student at the University of Pécs. I build full-stack web applications and distributed back-end systems. I want to specialise in data-intensive, distributed and secure software systems.",
   cv: `${process.env.PUBLIC_URL}/Nooraddeen_Al-Haddad_CV.pdf`,
   email: "nooraddeenalhaddad2020@gmail.com",
   github: "https://github.com/Noor9324098",
